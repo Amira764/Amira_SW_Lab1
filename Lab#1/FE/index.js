@@ -56,14 +56,17 @@ function createEmployee (){
   // get data from input field
     const employeeName = document.getElementById('name').value;
     const employeeId = document.getElementById('id').value;
+     if (employeeName==='' || employeeId==='')
+    {alert("Please enter Name and ID");}
   // send data to BE
+    else{
     fetch('http://localhost:3000/api/v1/employee', { //URL
       method: 'POST',
       headers: { //used when sending parameters using the body 
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ employeeName, employeeId }), //body parameter
-    })
+    })}
     // Call fetchEmployees 
     fetchEmployees();
 }
