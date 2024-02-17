@@ -34,7 +34,7 @@ function fetchEmployees() {
 // 1- Get a reference to the submit button in the HTML document.
 // 2- Attach an event listener to the submit button that listens for the "click" event.
 // 3- Specify the action to be taken when the button is clicked, which is calling the createEmployee function.
-const submitButton = document.querySelector('#employeeForm button[type="submit"]');
+const submitButton = document.getElementsByClassName("btn btn-primary mt-3")[0];
 submitButton.addEventListener('click', createEmployee);
 
 // TODO
@@ -45,7 +45,7 @@ document.addEventListener('click', function(event)
   if (event.target.classList.contains('btn-danger'))
   {
     // employee ID in the first column
-    const employeeId = event.target.closest('tr').querySelector('td:first-child').textContent;
+    const employeeId = event.target.parentElement.parentElement.cells[0].textContent;
     deleteEmployee(employeeId);
   }
 });
