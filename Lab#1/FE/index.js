@@ -1,5 +1,5 @@
 function fetchEmployees() {
-  fetch('http://localhost:3000/api/v1/employee')
+  fetch('http://localhost:3000/api/v1/employee') //fetching data from BE
     .then(response => response.json())
     .then(data => {
       const tableBody = document.getElementById('dataTable')
@@ -31,22 +31,53 @@ function fetchEmployees() {
 
 // TODO
 // add event listener to submit button
+// 1- Get a reference to the submit button in the HTML document.
+// 2- Attach an event listener to the submit button that listens for the "click" event.
+// 3- Specify the action to be taken when the button is clicked, which is calling the createEmployee function.
+const submitButton = document.querySelector('#employeeForm button[type="submit"]');
+submitButton.addEventListener('click', createEmployee);
 
 // TODO
 // add event listener to delete button
+// adding an EventListener to the whole document
+document.addEventListener('click', function(event) 
+{ //if an event happened to delete button
+  if (event.target.classList.contains('btn-danger'))
+  {
+    // employee ID in the first column
+    const employeeId = event.target.closest('tr').querySelector('td:first-child').textContent;
+    deleteEmployee(employeeId);
+  }
+});
+
 
 // TODO
 function createEmployee (){
   // get data from input field
+    const employeeName = document.getElementById('name').value;
+    const employeeId = document.getElementById('id').value;
   // send data to BE
-  // call fetchEmployees
+    fetch('http://localhost:3000/api/v1/employee', { //URL
+      method: 'POST',
+      headers: { //used when sending parameters using the body 
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ employeeName, employeeId }), //body parameter
+    })
+    // Call fetchEmployees 
+    fetchEmployees();
 }
 
+
 // TODO
-function deleteEmployee (){
-  // get id
-  // send id to BE
-  // call fetchEmployees
+function deleteEmployee(employeeId) {
+  // get data from input field -> sent using fn parameter
+  // send data to BE
+    const URL = `http://localhost:3000/api/v1/employee/${employeeId}`;
+    fetch(URL,{method: 'DELETE',});
+    // Call fetchEmployees
+    fetchEmployees();
 }
+
 
 fetchEmployees()
